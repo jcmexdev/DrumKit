@@ -56,4 +56,25 @@
     <audio data-key="75" src="sounds/tom.wav"></audio>
     <audio data-key="76" src="sounds/tink.wav"></audio>
   </body>
+  <script>
+    const playSound = (e) => {
+      const keyCode = e.keyCode;
+      const sound = document.querySelector(`audio[data-key="${keyCode}"]`);
+      const key = document.querySelector(`div[data-key="${keyCode}"]`);
+      if (!sound) return; //if there aren't sound not play
+      sound.currentTime = 0;
+      sound.play();
+      key.classList.add('playing');
+    };
+
+    window.addEventListener('keydown', playSound);
+
+    const removePlayingMark = (e) => {
+      if (e.propertyName !== 'transform') return; // ww only want a transform event
+      e.target.classList.remove('playing');
+    };
+
+    keys = document.querySelectorAll('.key');
+    keys.forEach((key) => addEventListener('transitionend', removePlayingMark));
+  </script>
 </html>
