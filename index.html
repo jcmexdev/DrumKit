@@ -74,7 +74,20 @@
       e.target.classList.remove('playing');
     };
 
+    const playSoundWithClick = (e) => {
+      const keyCode = e.currentTarget.dataset.key;
+      const sound = document.querySelector(`audio[data-key="${keyCode}"]`);
+      const key = document.querySelector(`div[data-key="${keyCode}"]`);
+      if (!sound) return; //if there aren't sound not play
+      sound.currentTime = 0;
+      sound.play();
+      key.classList.add('playing');
+    };
+
     keys = document.querySelectorAll('.key');
-    keys.forEach((key) => addEventListener('transitionend', removePlayingMark));
+    keys.forEach((key) => {
+      key.addEventListener('transitionend', removePlayingMark);
+      key.addEventListener('click', playSoundWithClick);
+    });
   </script>
 </html>
